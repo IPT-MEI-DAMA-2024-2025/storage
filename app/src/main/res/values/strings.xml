@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Armazenamento de dados</string>
+    <string name="label_cabecalho">Armazenamento de dados</string>
+    <string name="shared_preferences">Shared Preferences</string>
+    <string name="sharedPrefencesEditText">escreva algum texto</string>
+    <string name="btWrite">Escreve</string>
+    <string name="btRead">Lê dados</string>
+    <string name="dados_guardados">Dados guardados</string>
+    <string name="txt_vazio">Não encontrei nada</string>
 </resources>
