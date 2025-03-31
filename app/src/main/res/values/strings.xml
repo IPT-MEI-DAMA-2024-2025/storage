@@ -2,7 +2,10 @@
     <string name="app_name">Armazenamento de dados</string>
     <string name="label_cabecalho">Armazenamento de dados</string>
     <string name="shared_preferences">Shared Preferences</string>
+    <string name="shared_preferencesMultiFich">Shared Preferences (múltiplos ficheiros)</string>
     <string name="sharedPrefencesEditText">escreva algum texto</string>
+    <string name="sharedPreferencesNome">escreva o seu nome</string>
+    <string name="sharedPreferencesIdade">escreva a sua idade</string>
     <string name="btWrite">Escreve</string>
     <string name="btRead">Lê dados</string>
     <string name="dados_guardados">Dados guardados</string>
