@@ -3,10 +3,12 @@ package pt.ipt.dama.storage
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +39,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txt4nome: EditText
     private lateinit var txt4idade: EditText
 
+    // External Storage
+    private lateinit var txt5nome: EditText
+    private lateinit var txt5idade: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +97,22 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.btRead4).setOnClickListener {
             lerInternalStorage()
+        }
+
+        // External Storage
+        // tarefa 5
+        txt5nome = findViewById(R.id.editText5a)
+        txt5idade = findViewById(R.id.editText5b)
+        findViewById<Button>(R.id.btWrite5).setOnClickListener {
+            // não esquecer!
+            // Se a versão do Android for <= 18, HÁ NECESSIDADE De PEDIR
+            // EXPLICITAMENTE AUTORIZAÇÃO AO UTILIZADOR PARA ACEDER AO
+            // ARMAZENAMENTO EXTERNO
+            escreveExternalStorage()
+            esconderTeclado(it)
+        }
+        findViewById<Button>(R.id.btRead5).setOnClickListener {
+            lerExternalStorage()
         }
     }
 
@@ -240,15 +261,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     // TAREFA 4
     /**
-     * Escrever os valores introduzidos pelo utilizador na Cache
+     * Escrever os valores introduzidos pelo utilizador na Internal Storage
      */
     private fun escreveInternalStorage() {
         // endereço da pasta onde será gerado o ficheiro
         // associado à área de atuação da aplicação
-        val directory: File = getFilesDir()
+        val directory: File = filesDir
         // nome do ficheiro na Internal Storage
         val file: File = File(directory, "dadosInternalStorage.txt")
         try {
@@ -267,10 +287,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Ler os valores introduzidos pelo utilizador da Cache
+     * Ler os valores introduzidos pelo utilizador da Internal Storage
      */
     private fun lerInternalStorage() {
-        val directory: File = getFilesDir()
+        val directory: File = filesDir
         val file = File(directory, "dadosInternalStorage.txt")
         try {
             val fi = FileInputStream(file)
@@ -284,19 +304,79 @@ class MainActivity : AppCompatActivity() {
             val contextView = findViewById<View>(R.id.main)
             Snackbar.make(
                 contextView,
-                "Você chama-se ${nome.toString().uppercase()} e tem $idade anos! - Internal Storage",
+                "Você chama-se ${
+                    nome.toString().uppercase()
+                } e tem $idade anos! - Internal Storage",
                 Snackbar.LENGTH_LONG
             ).show()
         } catch (e: FileNotFoundException) {
-            Toast.makeText(this, getString(R.string.internal_storage_vazia), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.internal_storage_vazia), Toast.LENGTH_LONG)
+                .show()
         }
 
     }
 
 
+// TAREFA 5
+    /**
+     * Escrever os valores introduzidos pelo utilizador na External Storage
+     */
+    private fun escreveExternalStorage() {
+        // endereço da pasta onde será gerado o ficheiro
+        // associado à área de atuação da aplicação
+        val directory: File = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)!!
 
+        // nome do ficheiro na External Storage
+        val file: File = File(directory, "dadosExternalStorage.txt")
+        try {
+            val fo: FileOutputStream = FileOutputStream(file)
+            val ps: PrintStream = PrintStream(fo)
+            ps.println(txt5nome.text)
+            ps.println(txt5idade.text)
+            ps.close()
+            fo.close()
 
-    
+            // neste caso, vamos mostrar uma mensagem de 'conforto' ao utilizador
+            Toast.makeText(this, getString(R.string.dados_guardados), Toast.LENGTH_SHORT).show()
+        } catch (e: FileNotFoundException) {
+            Toast.makeText(
+                this,
+                getString(R.string.escritaErradaExternalStorage),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    /**
+     * Ler os valores introduzidos pelo utilizador da External Storage
+     */
+    private fun lerExternalStorage() {
+        val directory: File = Environment.getExternalStorageDirectory()
+        val file = File(directory, "dadosExternalStorage.txt")
+        try {
+            val fi = FileInputStream(file)
+            val sc = Scanner(fi)
+            val nome = sc.nextLine()
+            val idade = sc.nextLine()
+            sc.close()
+            fi.close()
+
+            // mostrar os dados
+            val contextView = findViewById<View>(R.id.main)
+            Snackbar.make(
+                contextView,
+                "Você chama-se ${
+                    nome.toString().uppercase()
+                } e tem $idade anos! - External Storage",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } catch (e: FileNotFoundException) {
+            Toast.makeText(this, getString(R.string.external_storage_vazia), Toast.LENGTH_LONG)
+                .show()
+        }
+
+    }
+
 
     /**
      * Esconder o teclado
@@ -304,7 +384,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun esconderTeclado(view: View) {
         // hide the keyboard
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
