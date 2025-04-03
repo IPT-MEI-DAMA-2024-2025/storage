@@ -35,13 +35,13 @@
 
             <Button
                 android:id="@+id/btWrite1"
-                style="@style/button"
+                style="@style/buttonWrite"
                 android:layout_marginRight="10dp"
                 android:text="@string/btWrite" />
 
             <Button
                 android:id="@+id/btRead1"
-                style="@style/button"
+                style="@style/buttonRead"
                 android:layout_marginLeft="10dp"
                 android:text="@string/btRead" />
         </LinearLayout>
@@ -77,13 +77,13 @@
 
             <Button
                 android:id="@+id/btWrite2"
-                style="@style/button"
+                style="@style/buttonWrite"
                 android:layout_marginRight="10dp"
                 android:text="@string/btWrite" />
 
             <Button
                 android:id="@+id/btRead2"
-                style="@style/button"
+                style="@style/buttonRead"
                 android:layout_marginLeft="10dp"
                 android:text="@string/btRead" />
         </LinearLayout>
@@ -120,13 +120,13 @@
 
             <Button
                 android:id="@+id/btWrite3"
-                style="@style/button"
+                style="@style/buttonWrite"
                 android:layout_marginRight="10dp"
                 android:text="@string/btWrite" />
 
             <Button
                 android:id="@+id/btRead3"
-                style="@style/button"
+                style="@style/buttonRead"
                 android:layout_marginLeft="10dp"
                 android:text="@string/btRead" />
         </LinearLayout>
@@ -163,13 +163,13 @@
 
             <Button
                 android:id="@+id/btWrite4"
-                style="@style/button"
+                style="@style/buttonWrite"
                 android:layout_marginRight="10dp"
                 android:text="@string/btWrite" />
 
             <Button
                 android:id="@+id/btRead4"
-                style="@style/button"
+                style="@style/buttonRead"
                 android:layout_marginLeft="10dp"
                 android:text="@string/btRead" />
         </LinearLayout>
@@ -207,13 +207,13 @@
 
             <Button
                 android:id="@+id/btWrite5"
-                style="@style/button"
+                style="@style/buttonWrite"
                 android:layout_marginRight="10dp"
                 android:text="@string/btWrite" />
 
             <Button
                 android:id="@+id/btRead5"
-                style="@style/button"
+                style="@style/buttonRead"
                 android:layout_marginLeft="10dp"
                 android:text="@string/btRead" />
         </LinearLayout>
