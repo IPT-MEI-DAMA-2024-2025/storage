@@ -33,6 +33,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txt3nome: EditText
     private lateinit var txt3idade: EditText
 
+    // Internal Storage
+    private lateinit var txt4nome: EditText
+    private lateinit var txt4idade: EditText
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -75,6 +80,18 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.btRead3).setOnClickListener {
             lerCache()
+        }
+
+        // Internal Storage
+        // tarefa 4
+        txt4nome = findViewById(R.id.editText4a)
+        txt4idade = findViewById(R.id.editText4b)
+        findViewById<Button>(R.id.btWrite4).setOnClickListener {
+            escreveInternalStorage()
+            esconderTeclado(it)
+        }
+        findViewById<Button>(R.id.btRead4).setOnClickListener {
+            lerInternalStorage()
         }
     }
 
@@ -222,6 +239,64 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+
+    // TAREFA 4
+    /**
+     * Escrever os valores introduzidos pelo utilizador na Cache
+     */
+    private fun escreveInternalStorage() {
+        // endereço da pasta onde será gerado o ficheiro
+        // associado à área de atuação da aplicação
+        val directory: File = getFilesDir()
+        // nome do ficheiro na Internal Storage
+        val file: File = File(directory, "dadosInternalStorage.txt")
+        try {
+            val fo: FileOutputStream = FileOutputStream(file)
+            val ps: PrintStream = PrintStream(fo)
+            ps.println(txt4nome.text)
+            ps.println(txt4idade.text)
+            ps.close()
+            fo.close()
+
+            // neste caso, vamos mostrar uma mensagem de 'conforto' ao utilizador
+            Toast.makeText(this, getString(R.string.dados_guardados), Toast.LENGTH_SHORT).show()
+        } catch (e: FileNotFoundException) {
+            Toast.makeText(this, getString(R.string.escritaErradaCache), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /**
+     * Ler os valores introduzidos pelo utilizador da Cache
+     */
+    private fun lerInternalStorage() {
+        val directory: File = getFilesDir()
+        val file = File(directory, "dadosInternalStorage.txt")
+        try {
+            val fi = FileInputStream(file)
+            val sc = Scanner(fi)
+            val nome = sc.nextLine()
+            val idade = sc.nextLine()
+            sc.close()
+            fi.close()
+
+            // mostrar os dados
+            val contextView = findViewById<View>(R.id.main)
+            Snackbar.make(
+                contextView,
+                "Você chama-se ${nome.toString().uppercase()} e tem $idade anos! - Internal Storage",
+                Snackbar.LENGTH_LONG
+            ).show()
+        } catch (e: FileNotFoundException) {
+            Toast.makeText(this, getString(R.string.internal_storage_vazia), Toast.LENGTH_LONG).show()
+        }
+
+    }
+
+
+
+
+    
 
     /**
      * Esconder o teclado
