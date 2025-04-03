@@ -18,7 +18,13 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="button">
+    <style name="buttonWrite">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/black</item>
+    </style>
+
+    <style name="buttonRead">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
